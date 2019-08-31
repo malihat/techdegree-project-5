@@ -15,7 +15,11 @@ let html = '';
 
 fetch('https://randomuser.me/api/?results=12&nat=us,dk,fr,gb')
     .then(res => res.json())
-    .then(data => addToDom(data.results))
+    .then(data =>{
+        addToDom(data.results);
+        filterSearch(data.results)//console.log(data.results)
+    }) 
+    //.then(datas =>  console.log(datas));  //filterSearch(data.results))
 
 
 function addToDom(result) {
@@ -44,8 +48,7 @@ function addToDom(result) {
         gallery.append(html);
     
     }
-    // card.append(image);
-    // card.append(otherInfo);
+
     let cardImage = $('.card-img-container')
 
     cardImage.on('click', e => {    
@@ -108,20 +111,67 @@ function addToDom(result) {
     });
 }
 
-//  ==========================  FILTER RESULTS ===================
+//  ==========================  FILTER RESULTS  ===================
 
 function filterSearch(result) {
-    let search = $('#search-input');
-    for (let i=0; i<result.length; i++) { 
-        $('#serach-submit').on('click', e => {
-            if (result[i].name.first.toLowerCase().includes(e.target.value.toLowerCase()) ) {
+    let search = document.querySelector('#search-input');
+    const card = document.querySelectorAll(".card");
+    const searchResults = [];
 
+    // console.log('its a match', search.value.toLowerCase());
+    // document.querySelector('#search-submit').addEventListener('click', (e) => {
+        // document.querySelector('form').addEventListener('submit', e => {
+            search.addEventListener('keyup', e => {
+            e.preventDefault();
+            for (let i=0; i<result.length; i++) { 
+                console.log(typeof card)
+        
+            if (result[i].name.first.toLowerCase().includes(search.value.toLowerCase()) ) {
+                card[i].style.display = 'block'; 
+
+                // addToDom(result[i])
+                // let _index = i;
+
+                // console.log('its a match',e.target.value.toLowerCase(), i, result[_index].email );
+                // html = `<div class="card"> what
+                // <div class="card-img-container">
+                //     <img class="card-img" src=${result[_index].picture.thumbnail} alt="profile picture">
+                // </div>
+                // <div class="card-info-container">
+                //     <h3 id="name" class="card-name cap"> ${result[_index].name.first}  ${result[_index].name.last} <h3>
+                //     <p class="card-text"> ${result[_index].email} </p>
+                //     <p class="card-text cap">${result[_index].location.city},  ${result[_index].location.state} </p>
+                // </div>
+                // </div>`
+                // gallery.append(html);
+
+                // $('.card').css('display', 'block');
+            } 
+            else {
+                // $('.card').css('display', 'none');
+                card[i].style.display = 'none' 
             }
-        });
-    }
-
+        }    
+    });
+    
 }
 
+
+
+// ***** WHY WON'T THE KEYUP LISTENER WORK??? ********************        
+
+// searchField.addEventListener('keyup', () => {
+//     cardNames.forEach(card => { 
+//         if (card.innerText.includes(searchField.value.toLowerCase())) {
+//         card.style.display = "";
+//         } else {
+//         card.style.display = "none";     
+//         };
+//     });
+//  }); 
+// };
+// using to call my variables and their values inside ^^^^ function                          
+// };  
 
 // -----------------------Modal-----------------------------
 
