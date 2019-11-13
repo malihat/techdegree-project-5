@@ -20,7 +20,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us,au,ca,ie,nz')
 // Adds data from the API to the DOM, displays 12 employees on the screen
 function addToDom(result) {
     for (let i=0; i<result.length; i++) {
-
+        
         // Creates new div with card class and adds the image and info container
         let card = document.createElement('div');
         card.className = 'card'
@@ -56,7 +56,7 @@ function cardInfo(result, index) {
 
     _modal.append(`<p class="modal-text cap"> ${result[index].cell} </p>`)
     let location = result[index].location;
-    _modal.append(`<p class="modal-text cap"> ${location.street}, ${location.city}, ${location.state} ${location.postcode} </p>`)
+    _modal.append(`<p class="modal-text cap"> ${location.street.name} ${location.street.number} ,${location.city}, ${location.state} ${location.postcode} </p>`)
     let date = result[index].dob.date;
     _modal.append(`<p class="modal-text cap">Birthday: ${date.substring(5,7)}/${date.substring(8,10)}/${date.substring(0,4)}</p>`)
     
@@ -126,7 +126,7 @@ function filterSearch(result) {
     let search = document.querySelector('#search-input');
     const card = document.querySelectorAll(".card");
     const submit = document.querySelector('#search-submit');
-        submit.addEventListener('click', e => {
+    submit.addEventListener('click', e => {
         e.preventDefault();
         for (let i=0; i<result.length; i++) { 
             if (result[i].name.first.toLowerCase().includes(search.value.toLowerCase()) ) {
